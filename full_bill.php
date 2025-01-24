@@ -333,44 +333,62 @@
 
 
 <script>
-    function printBillDetails() {
-        const billDetails = document.getElementById('bill-details').outerHTML;
-        const printWindow = window.open('', '_blank');
-        printWindow.document.open();
-        printWindow.document.write(`
-            <html>
-            <head>
-                <title>Print Bill Details</title>
-                <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                        margin: 20px;
-                        padding: 20px;
-                    }
-                    .customer-details {
-                        background-color: #e9ecef;
-                        border-radius: 8px;
-                        padding: 20px;
-                        margin-bottom: 20px;
-                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                    }
-                    .customer-details h3 {
-                        text-align: center;
-                        margin-bottom: 20px;
-                    }
-                    .info-title {
-                        font-weight: bold;
-                    }
-                </style>
-            </head>
-            <body>
-                ${billDetails}
-            </body>
-            </html>
-        `);
-        printWindow.document.close();
-        printWindow.print();
+   function printBillDetails() {
+    console.log("Print Bill Details function triggered!");
+
+    const billDetails = document.getElementById('bill-details');
+    if (!billDetails) {
+        console.error('Error: No bill details found to print!');
+        alert('No bill details found to print!');
+        return;
     }
+
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+        console.error('Error: Failed to open a new window. Pop-up blocked?');
+        alert('Unable to open a new window. Please check your pop-up blocker.');
+        return;
+    }
+
+    printWindow.document.open();
+    printWindow.document.write(`
+        <html>
+        <head>
+            <title>Print Bill Details</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 20px;
+                }
+                .customer-details {
+                    background-color: #e9ecef;
+                    border-radius: 8px;
+                    padding: 20px;
+                    margin-bottom: 20px;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                }
+                h3 {
+                    text-align: center;
+                    margin-bottom: 20px;
+                }
+                .info-title {
+                    font-weight: bold;
+                }
+            </style>
+        </head>
+        <body>
+            ${billDetails.outerHTML}
+        </body>
+        </html>
+    `);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+
+    console.log("Print operation completed.");
+}
+printWindow.print();
+    
 </script>
 
     <!-- Bootstrap JS and dependencies -->
